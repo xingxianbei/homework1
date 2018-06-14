@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			.box {
+				width: 600px;
+				height: 300px;
+				border: 1px solid black;
+				text-align: center;
+			}
+			
+			li {
+				
+				float: right;
+				width: 350px;
+				height: 30px;
+				background-color: #B5B5B5;
+				line-height: 30px;
+				list-style: none;
+				margin-bottom: 5px;
+				/*top: -50px;*/
+			}
+			
+			#out{
+				float: left;
+				
+				width: 200px;
+				height: 200px;
+				background-image: url(img/trash1.png);
+				background-size: 100%;
+				margin-top: 50px;
+				
+				
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="box">
+			
+			<div id="out"></div>
+
+			<ul>
+				<li draggable="true">《文章1》</li>
+				<li draggable="true">《文章2》</li>
+				<li draggable="true">《文章3》</li>
+				<li draggable="true">《文章4》</li>
+
+			</ul>
+		</div>
+
+		<p id="txt"></p>
+
+		<script type="text/javascript">
+			window.onload = function() {
+				var ali = document.getElementsByTagName('li');
+				var odiv = document.getElementById("out");
+				var txt = document.getElementById("txt")
+				
+				
+
+				var tmp = null
+
+				for(var i = 0; i < ali.length; i++) {
+					ali[i].ondragstart = function(ev) {
+						tmp = this
+						ev.dataTransfer.setData('text', this.innerHTML);
+						console.log("开始拖动")
+
+					}
+				}
+				
+				odiv.ondragenter = function(){
+					console.log("进入")
+				}
+				
+				odiv.ondragover = function(ev){
+					ev.preventDefault();
+				}
+				
+				odiv.oondragleave = function(){
+					console.log("离开")
+				}
+				
+				odiv.ondrop = function(ev){
+					var otext = ev.dataTransfer.getData('Text');
+					txt.innerHTML = '删除的是：'+otext;
+					tmp.parentNode.removeChild(tmp);
+				}
+			
+			
+			}
+		</script>
+	</body>
+
+</html>
